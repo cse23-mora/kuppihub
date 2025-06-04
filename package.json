@@ -2,7 +2,7 @@
   "name": "kuppihub",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cse-mora.github.io/kuppihub",
+  "homepage": "https://kuppihub.cse23.org/",
   "dependencies": {
     "@react-three/drei": "^10.0.7",
     "@react-three/fiber": "^9.1.2",
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && eslint --max-warnings=0 || true && react-scripts build",
+    "build": "react-scripts build",
     "predeploy": "npm run build && cp build/index.html build/404.html",
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
