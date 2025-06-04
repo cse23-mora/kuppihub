@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Kavindu Perera",
+    "image": "/tutors/picc.jpg",
+    "linkedin": "https://linkedin.com/in/kavinduperera",
+    "subjects": ["Data Structures", "Methods of Mathematics"],
+    "sessions": 5
+  },
+  {
+    "name": "Nimasha Fernando",
+    "image": "/tutors/picc.jpg",
+    "linkedin": "https://linkedin.com/in/nimashafernando",
+    "subjects": ["Program Construction", "Communication Skills"],
+    "sessions": 3
+  },
+  {
+    "name": "Sachin Silva",
+    "image": "/tutors/picc.jpg",
+    "linkedin": "https://linkedin.com/in/sachinsilva",
+    "subjects": ["Theory of Electricity", "Computer Organization"],
+    "sessions": 4
+  },
+  {
+    "name": "Nethmi Perera",
+    "image": "/tutors/picc.jpg",
+    "linkedin": "https://linkedin.com/in/nethmiperera",
+    "subjects": ["Data Structures", "PC"],
+    "sessions": 2
+  },
+  {
+    "name": "Dineth Jayasinghe",
+    "image": "/tutors/picc.jpg",
+    "linkedin": "https://linkedin.com/in/dinethjayasinghe",
+    "subjects": ["Methods of Mathematics"],
+    "sessions": 10
+  }
+]

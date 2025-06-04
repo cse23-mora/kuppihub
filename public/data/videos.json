@@ -1,0 +1,99 @@
+[
+  {
+    "id": 1,
+    "title": "Algebra Basics",
+    "description": "Learn fundamental algebraic concepts including equations, variables, and solving linear equations with step-by-step examples.",
+    "url": "",
+    "subject": "methods-of-mathematics",
+    "author": "Dr. Sarah Mitchell",
+    "duration": "45:30",
+    "level": "Beginner",
+    "publishedAt": "2024-04-15",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=MTIzNTkwMjYyNDMwMjM4Ni8zMzkzNTAw"
+ 
+  },
+  {
+    "id": 2,
+    "title": "Calculus Intro",
+    "description": "Introduction to differential calculus, covering limits, derivatives, and basic applications in real-world problems.",
+    "url": "https://example.com/video2",
+    "subject": "methods-of-mathematics",
+    "author": "Prof. Michael Chang",
+    "duration": "52:15",
+    "level": "Intermediate",
+    "publishedAt": "2024-04-18",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=MTIzNTkwMjYyNDMwMjM4Ni8zMzkzNTAx"
+  },
+  {
+    "id": 3,
+    "title": "Boolean Logic & Gates",
+    "description": "Introduction to digital logic, Boolean expressions, and implementation using logic gates.",
+    "url": "https://example.com/video9",
+    "subject": "computer-organization-and-digital-design",
+    "author": "Dr. Alan Greene",
+    "duration": "41:20",
+    "level": "Beginner",
+    "publishedAt": "2024-05-01",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=xyz09"
+  },
+  {
+    "id": 4,
+    "title": "Programming with Functions",
+    "description": "Learn the basics of program construction using functions and modular design.",
+    "url": "https://example.com/video10",
+    "subject": "program-construction",
+    "author": "Dr. Emily Stone",
+    "duration": "37:50",
+    "level": "Beginner",
+    "publishedAt": "2024-05-02",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=xyz10"
+  },
+  {
+    "id": 5,
+    "title": "Electric Circuits 101",
+    "description": "Explore voltage, current, resistance, and basic circuit laws in electrical theory.",
+    "url": "https://example.com/video11",
+    "subject": "theory-of-electricity",
+    "author": "Prof. David Miller",
+    "duration": "48:00",
+    "level": "Intermediate",
+    "publishedAt": "2024-05-03",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=xyz11"
+  },
+  {
+    "id": 6,
+    "title": "Effective Communication Techniques",
+    "description": "Master verbal and non-verbal communication for academic and professional settings.",
+    "url": "https://example.com/video12",
+    "subject": "communication-skills",
+    "author": "Ms. Jennifer Parker",
+    "duration": "38:15",
+    "level": "Beginner",
+    "publishedAt": "2024-04-28",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=xyz12"
+  },
+  {
+    "id": 7,
+    "title": "Data Structures Overview",
+    "description": "Learn about arrays, linked lists, stacks, and queues with visual explanations.",
+    "url": "https://example.com/video13",
+    "subject": "data-structures-and-algorithms",
+    "author": "Dr. John Blake",
+    "duration": "50:10",
+    "level": "Intermediate",
+    "publishedAt": "2024-05-04",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=xyz13"
+  },
+  {
+    "id": 8,
+    "title": "Algorithms and Sorting",
+    "description": "Understand sorting algorithms like bubble sort, insertion sort, and merge sort.",
+    "url": "https://example.com/video14",
+    "subject": "data-structures-and-algorithms",
+    "author": "Dr. John Blake",
+    "duration": "55:45",
+    "level": "Intermediate",
+    "publishedAt": "2024-05-05",
+    "telegramDownload": "https://t.me/Zara_TBot/?start=xyz14"
+  }
+]
