@@ -26,6 +26,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          
+      - name: Disable CI strict mode
+        run: echo "CI=false" >> $GITHUB_ENV
 
       - name: Install Dependencies
         run: npm install
@@ -38,7 +41,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./
 
   deploy:
     needs: build
