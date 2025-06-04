@@ -151,7 +151,7 @@ export default function Subject() {
     href={`/watch/${video.id}`}
     className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
   >
-    🎬 Watch Youtube 
+    🎬 Watch on Youtube 
   </a>
   )}
 </div>
