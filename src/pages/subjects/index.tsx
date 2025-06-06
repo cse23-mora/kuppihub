@@ -1,31 +1,44 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { subjects } from '../utils/subjects';
+import Link from 'next/link';
+import { subjects as allSubjectsFromUtil } from '@/utils/subjects';
+// Preloader likely not needed as data is from getStaticProps
+// import Preloader from '@/components/Preloader';
+import type { InferGetStaticPropsType, GetStaticProps } from 'next';
 
-import Preloader from '../components/Preloader'; // Import Preloader component
+// Define types for props
+type Subject = {
+  slug: string;
+  name: string;
+  description?: string; // Assuming subjects might have this
+  // Add other subject properties if available in your subjects util
+};
 
-export default function Subjects() {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+type SubjectsPageProps = {
+  subjects: Subject[];
+  // If video counts were to be passed, they'd be here:
+  // videoCounts: { [slug: string]: number };
+};
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    // Fetch videos from local JSON file
-    fetch('https://cse23.org/kuppihub-data/sem2.json', { cache: 'no-store' })
-      .then(response => response.json())
-      .then(data => {
-        setVideos(data);
-        setLoading(false); // Set loading to false once the data is fetched
-      })
-      .catch(error => {
-        console.error('Error loading videos:', error);
-        setLoading(false); // Ensure loading is set to false even in case of an error
-      });
-  }, []);
+export const getStaticProps: GetStaticProps<SubjectsPageProps> = async () => {
+  // If video counts are needed:
+  // const videoRes = await fetch('https://cse23.org/kuppihub-data/sem2.json');
+  // const allVideos = await videoRes.json();
+  // const videoCounts = allSubjectsFromUtil.reduce((acc, subject) => {
+  //   acc[subject.slug] = allVideos.filter(v => v.subject === subject.slug).length;
+  //   return acc;
+  // }, {});
 
-  if (loading) {
-    return <Preloader />; // Show preloader while loading
-  }
+  return {
+    props: {
+      subjects: allSubjectsFromUtil,
+      // videoCounts, // if doing counts
+    },
+  };
+};
+
+export default function SubjectsPage({ subjects }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // Removed client-side data fetching, loading states, and useEffect for scrollTo.
+  // The 'subjects' prop comes from getStaticProps.
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
       <div className="max-w-7xl mx-auto">
@@ -37,27 +50,26 @@ export default function Subjects() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {subjects.map(subject => {
-            const subjectVideos = videos.filter(v => v.subject === subject.slug);
-       
-          
+            // const videoCount = videoCounts ? videoCounts[subject.slug] : 0; // if using videoCounts
 
             return (
               <Link 
-                to={`/subjects/${subject.slug}`} 
+                href={`/subjects/${subject.slug}`}
                 key={subject.slug}
                 className="transform transition-all duration-300 hover:scale-105"
               >
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl">
                   <div className="relative h-48 w-full">
                     <img
-                      src={`/subjects/${subject.slug}.jpg`}
+                      src={`/subjects/${subject.slug}.jpg`} // Assumes images are in public/subjects/
                       alt={subject.name}
                       className="h-full w-full object-cover group-hover:opacity-75 transition-opacity duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="text-sm font-semibold">{subjectVideos.length} videos available</p>
-                    </div>
+                    {/* Video count display removed for now to simplify, can be added back if getStaticProps provides counts */}
+                    {/* <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-sm font-semibold">{videoCount} videos available</p>
+                    </div> */}
                   </div>
 
                   <div className="p-6">

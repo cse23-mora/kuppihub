@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
       setIsMenuOpen(false);
     }
@@ -21,7 +22,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2 group">
+            <Link href="/" className="flex items-center space-x-2 group">
               <svg
                 className="h-8 w-8 text-blue-600 group-hover:scale-110 transition-transform duration-300"
                 fill="none"
@@ -43,7 +44,7 @@ export default function Header() {
 {/* Desktop Nav */}
 <div className="hidden sm:flex items-center space-x-6">
   <Link 
-    to="/" 
+    href="/"
     className="px-5 py-2 rounded-full font-bold text-blue-800 bg-white border border-blue-300 shadow-sm 
                hover:bg-blue-700 hover:text-white hover:shadow-md hover:border-blue-700
                transition-all duration-500 ease-in-out transform hover:scale-105"
@@ -51,7 +52,7 @@ export default function Header() {
     Home
   </Link>
   <Link 
-    to="/subjects" 
+    href="/subjects"
     className="px-5 py-2 rounded-full font-bold text-blue-800 bg-white border border-blue-300 shadow-sm 
                hover:bg-blue-700 hover:text-white hover:shadow-md hover:border-blue-700
                transition-all duration-500 ease-in-out transform hover:scale-105"
@@ -59,7 +60,7 @@ export default function Header() {
     Subjects
   </Link>
   <Link 
-    to="/Tutors"
+    href="/Tutors"
     className="px-5 py-2 rounded-full font-bold text-blue-800 bg-white border border-blue-300 shadow-sm 
                hover:bg-blue-700 hover:text-white hover:shadow-md hover:border-blue-700
                transition-all duration-500 ease-in-out transform hover:scale-105"
@@ -67,7 +68,7 @@ export default function Header() {
     Tutors
   </Link>
   <Link 
-    to="/about" 
+    href="/about"
     className="px-5 py-2 rounded-full font-bold text-blue-800 bg-white border border-blue-300 shadow-sm 
                hover:bg-blue-700 hover:text-white hover:shadow-md hover:border-blue-700
                transition-all duration-500 ease-in-out transform hover:scale-105"
@@ -128,7 +129,7 @@ export default function Header() {
     {['Home', 'Subjects', 'Tutors','About'].map((item, i) => (
       <Link
         key={i}
-        to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+        href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
         onClick={() => setIsMenuOpen(false)}
         className="block text-blue-800 font-semibold border border-blue-200 rounded-lg px-4 py-2 
                    hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:scale-105"

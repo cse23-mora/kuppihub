@@ -1,27 +1,38 @@
-import { useState, useEffect } from "react";
-import Preloader from "../components/Preloader";
 import { motion } from "framer-motion";
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
+import fs from 'fs';
+import path from 'path';
 
-export default function TutorsPage() {
-  const [tutors, setTutors] = useState([]);
-  const [loading, setLoading] = useState(true);
+// Define types
+type Tutor = {
+  name: string;
+  image: string;
+  subjects: string[];
+  sessions: number;
+  linkedin: string;
+};
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    fetch("https://cse23.org/kuppihub-data/tutordata.json", { cache: 'no-store' })
-      .then(response => response.json())
-      .then(data => {
-        const sorted = [...data].sort((a, b) => b.sessions - a.sessions);
-        setTutors(sorted);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Error loading tutors:", error);
-        setLoading(false);
-      });
-  }, []);
+type TutorsPageProps = {
+  tutors: Tutor[];
+};
 
-  if (loading) return <Preloader />;
+export const getStaticProps: GetStaticProps<TutorsPageProps> = async () => {
+  const tutorsFilePath = path.join(process.cwd(), 'public/data/tdata.json');
+  const tutorsJsonData = fs.readFileSync(tutorsFilePath, 'utf-8');
+  const tutorsData: Tutor[] = JSON.parse(tutorsJsonData);
+
+  const sortedTutors = [...tutorsData].sort((a, b) => b.sessions - a.sessions);
+
+  return {
+    props: {
+      tutors: sortedTutors,
+    },
+  };
+};
+
+export default function TutorsPage({ tutors }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // Data (tutors) is now passed as props.
+  // Client-side fetching, loading states, and useEffect for scrollTo are removed.
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">

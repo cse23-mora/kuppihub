@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Logo and Description */}
           <div className="mb-6 md:mb-0 text-center md:text-left">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2 group">
+            <Link href="/" className="flex items-center space-x-2 group">
               <svg
                 className="h-8 w-8 text-blue-600 group-hover:scale-110 transition-transform duration-300"
                 fill="none"
@@ -34,25 +34,25 @@ export default function Footer() {
          {/* Quick Links */}
 <div className="flex flex-wrap justify-center gap-4 text-sm pr-4">
   <Link
-    to="/"
+    href="/"
     className="border border-white px-3 py-1 rounded hover:text-blue-400 hover:border-blue-400 transform hover:scale-105 transition duration-200"
   >
     Home
   </Link>
   <Link
-    to="/subjects"
+    href="/subjects"
     className="border border-white px-3 py-1 rounded hover:text-blue-400 hover:border-blue-400 transform hover:scale-105 transition duration-200"
   >
     Subjects
   </Link>
   <Link
-    to="/about"
+    href="/about"
     className="border border-white px-3 py-1 rounded hover:text-blue-400 hover:border-blue-400 transform hover:scale-105 transition duration-200"
   >
     About
   </Link>
   <Link
-    to="/contact"
+    href="/contact"
     className="border border-white px-3 py-1 rounded hover:text-blue-400 hover:border-blue-400 transform hover:scale-105 transition duration-200"
   >
     Contact

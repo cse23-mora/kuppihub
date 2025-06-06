@@ -1,17 +1,17 @@
-import ThreeDModel from '../components/ThreeDModel';
-import React, { useEffect, useState } from 'react';
-import Preloader from '../components/Preloader';
+import dynamic from 'next/dynamic';
+import React from 'react'; // Removed useEffect, useState
+
+// Dynamically import ThreeDModel for client-side rendering only
+const ThreeDModel = dynamic(() => import('@/components/ThreeDModel'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] flex justify-center items-center bg-gray-100 rounded-md"><p>Loading 3D Model...</p></div>
+});
+
+// Preloader import is removed as preloader logic is removed
+// import Preloader from '@/components/Preloader';
 
 export default function Contact() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) return <Preloader />;
+  // Removed loading state and useEffect for preloader and scrollTo
 
   return (
     <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
