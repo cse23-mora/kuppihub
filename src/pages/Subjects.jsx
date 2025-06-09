@@ -11,7 +11,7 @@ export default function Subjects() {
   useEffect(() => {
     window.scrollTo(0, 0);
     // Fetch videos from local JSON file
-    fetch('https://cse23.org/kuppihub-data/sem2.json', { cache: 'no-store' })
+    fetch('https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json', { cache: 'no-store' })
       .then(response => response.json())
       .then(data => {
         setVideos(data);

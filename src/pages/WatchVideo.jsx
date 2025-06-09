@@ -6,7 +6,7 @@ export default function WatchVideo() {
   const [video, setVideo] = useState(null);
 
   useEffect(() => {
-    fetch('https://cse23.org/kuppihub-data/sem2.json')
+    fetch('https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json')
       .then(res => res.json())
       .then(data => {
         // Find by id (convert videoId param to number)

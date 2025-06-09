@@ -22,7 +22,7 @@ export default function Subject() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch('https://cse23.org/kuppihub-data/sem2.json', { cache: 'no-store' })
+    fetch('https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json', { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setVideos(data);

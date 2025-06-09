@@ -25,7 +25,7 @@ export default function Search() {
   useEffect(() => {
     window.scrollTo(0, 0);
     // Fetch video data from local JSON file
-    fetch("https://cse23.org/kuppihub-data/sem2.json", { cache: "no-store" })
+    fetch("https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json", { cache: "no-store" })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch video data");
         return res.json();

@@ -8,7 +8,7 @@ export default function TutorsPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch("https://cse23.org/kuppihub-data/tutordata.json", { cache: 'no-store' })
+    fetch("https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/tutordata.json", { cache: 'no-store' })
       .then(response => response.json())
       .then(data => {
         const sorted = [...data].sort((a, b) => b.sessions - a.sessions);
