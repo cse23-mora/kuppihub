@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link'; // Added for Next.js navigation
 import { Home, ArrowLeft, Code, Users, Sparkles, Zap, Cpu, Database } from 'lucide-react';
 
 const NotFound = () => {
@@ -62,10 +63,7 @@ const NotFound = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const handleGoHome = () => {
-    // In a real app, this would navigate to home
-    window.history.back();
-  };
+  // handleGoHome is removed as we'll use <Link>
 
   const glitchText = "404";
   const glitchChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?";
@@ -213,16 +211,15 @@ const NotFound = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up">
-          <button
-            onClick={handleGoHome}
-            className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="relative flex items-center gap-2">
-              <ArrowLeft className="w-5 h-5 group-hover:animate-pulse" />
-              Go Back Home
-            </div>
-          </button>
+          <Link href="/" legacyBehavior>
+            <a className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative flex items-center gap-2">
+                <ArrowLeft className="w-5 h-5 group-hover:animate-pulse" />
+                Go Back Home
+              </div>
+            </a>
+          </Link>
           
           <button
             onClick={() => window.location.reload()}

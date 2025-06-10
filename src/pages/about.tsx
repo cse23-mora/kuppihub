@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Preloader from '../components/Preloader';
+import React from 'react'; // Removed useState, useEffect
+import Preloader from '@/components/Preloader'; // Updated import path
 import { motion } from 'framer-motion';
 
 
@@ -9,15 +9,16 @@ const fadeUp = {
 };
 
 const About = () => {
-  const [loading, setLoading] = useState(true);
+  // Removed loading state and useEffect for preloader and scrollTo
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0); // Removed as per instructions
+  //   const timer = setTimeout(() => setLoading(false), 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  if (loading) return <Preloader />;
+  // if (loading) return <Preloader />; // Removed preloader logic
 
   const whyWeExist = [
     "Because 'I'll study later' becomes 'OMG, exam is tomorrow!'",

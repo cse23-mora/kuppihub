@@ -1,6 +1,73 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Preloader from '../components/Preloader';
+import { useRouter } from 'next/router'; // To access route params if needed, though getStaticProps provides them
+import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import Link from 'next/link'; // For internal navigation
+import { subjects as allSubjects } from '@/utils/subjects';
+// Preloader might be used if fallback: true/blocking, or for client-side transitions
+// For fallback: false and SSG, data is there at build time.
+// import Preloader from '@/components/Preloader';
+
+// Define types (can be moved to a types file)
+type SubjectType = {
+  slug: string;
+  name: string;
+  description?: string;
+  // other fields from your subjects util
+};
+
+type VideoType = {
+  id: string;
+  subject: string;
+  title: string;
+  description: string;
+  author: string;
+  publishedAt: string;
+  duration?: string;
+  url?: string;
+  DownloadLink?: string;
+  telegramDownload?: string;
+  telegramDownload2?: string;
+  KuppiMaterial?: string;
+  YoutubeVideo?: boolean; // Assuming this indicates if it's a YouTube video to be played internally
+};
+
+type SubjectPageProps = {
+  videos: VideoType[];
+  currentSubject: SubjectType;
+};
+
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = allSubjects.map((subject) => ({
+    params: { subjectName: subject.slug },
+  }));
+  return { paths, fallback: false }; // fallback: false means 404 for unknown slugs
+};
+
+export const getStaticProps: GetStaticProps<SubjectPageProps, { subjectName: string }> = async (context) => {
+  const { params } = context;
+  const subjectName = params!.subjectName; // Non-null assertion as subjectName is part of the path
+
+  // Fetch all video data
+  const videoRes = await fetch('https://cse23.org/kuppihub-data/sem2.json', { cache: 'no-store' });
+  const allVideos: VideoType[] = await videoRes.json();
+
+  // Filter videos for the current subject
+  const subjectVideos = allVideos.filter((video) => video.subject.toLowerCase() === subjectName.toLowerCase());
+
+  // Find current subject details
+  const currentSubject = allSubjects.find((s) => s.slug.toLowerCase() === subjectName.toLowerCase());
+
+  if (!currentSubject) {
+    return { notFound: true }; // Or handle as an error
+  }
+
+  return {
+    props: {
+      videos: subjectVideos,
+      currentSubject,
+    },
+  };
+};
 
 const TelegramIcon = () => (
   <svg
@@ -35,8 +102,10 @@ export default function Subject() {
   .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
 
-  if (loading) {
-    return <Preloader />;
+  // Preloader check might be useful if fallback:true or 'blocking' is used in getStaticPaths
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading subject...</div>; // Or a Preloader component
   }
 
   return (
@@ -44,20 +113,20 @@ export default function Subject() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-gray-800 capitalize">
-            {subjectName} Videos
+            {currentSubject.name} Videos {/* Use currentSubject from props */}
           </h1>
           <p className="text-gray-600 mt-2 text-lg">
-            {filteredVideos.length} videos found
+            {sortedVideos.length} videos found
           </p>
         </div>
 
-        {filteredVideos.length === 0 ? (
+        {sortedVideos.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">
-            No videos available for this subject.
+            No videos available for {currentSubject.name}.
           </p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-            {filteredVideos.map(video => (
+            {sortedVideos.map(video => (
               <div
                 key={video.id}
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 flex flex-col justify-between"
@@ -147,12 +216,12 @@ export default function Subject() {
 
 
     {video.YoutubeVideo && (
-     <a
-    href={`/watch/${video.id}`}
-    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-  >
-    🎬 Watch on Youtube 
-  </a>
+     <Link
+       href={`/watch/${video.id}`}
+       className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+     >
+      🎬 Watch on Youtube
+     </Link>
   )}
 </div>
 

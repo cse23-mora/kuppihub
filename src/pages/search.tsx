@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, Link } from "react-router-dom";
-import { subjects } from "../utils/subjects";
-
-import Preloader from "../components/Preloader"; // Import Preloader component
+import { useRouter } from "next/router"; // Changed from useSearchParams
+import Link from "next/link"; // Changed from react-router-dom
+import { subjects } from "@/utils/subjects"; // Updated path
+import Preloader from "@/components/Preloader"; // Updated path
 
 const TelegramIcon = () => (
   <svg
@@ -16,11 +16,11 @@ const TelegramIcon = () => (
 );
 
 export default function Search() {
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get("q")?.toLowerCase() || "";
+  const router = useRouter();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredVideos, setFilteredVideos] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,33 +41,39 @@ export default function Search() {
   }, []);
 
   useEffect(() => {
-    if (query && videos.length > 0) {
-      const results = videos.filter((video) => {
-        const searchable = [
-          video.title,
-          video.description,
-          video.author,
-          video.subject,
-          video.level,
-          new Date(video.publishedAt || "").toLocaleDateString("en-US"),
-        ]
-          .join(" ")
-          .toLowerCase();
-        return searchable.includes(query);
-      });
-      setFilteredVideos(results);
-    } else {
-      setFilteredVideos([]);
+    if (router.isReady) {
+      const currentQuery = (router.query.q as string || "").toLowerCase();
+      setQuery(currentQuery); // Set query state once router is ready
+
+      if (currentQuery && videos.length > 0) {
+        const results = videos.filter((video) => {
+          const searchable = [
+            video.title,
+            video.description,
+            video.author,
+            video.subject,
+            video.level,
+            new Date(video.publishedAt || "").toLocaleDateString("en-US"),
+          ]
+            .join(" ")
+            .toLowerCase();
+          return searchable.includes(currentQuery);
+        });
+        setFilteredVideos(results);
+      } else if (videos.length > 0) { // if query is empty but videos are loaded
+        setFilteredVideos([]);
+      }
     }
-  }, [query, videos]);
+  }, [router.isReady, router.query.q, videos]);
 
   const getSubjectName = (slug) => {
     const subject = subjects.find((s) => s.slug === slug);
     return subject ? subject.name : slug;
   };
 
-  if (loading) {
-    return <Preloader />; // Show preloader while loading
+  // Show preloader if router is not ready or if data is loading
+  if (!router.isReady || loading) {
+    return <Preloader />;
   }
 
   return (
@@ -77,16 +83,16 @@ export default function Search() {
           Search Results for: <span className="text-blue-600">"{query}"</span>
         </h1>
 
-        {filteredVideos.length === 0 ? (
+        {query && filteredVideos.length === 0 ? ( // Only show "No videos found" if there was a query
           <div className="bg-white p-6 rounded-lg shadow text-center">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              No videos found
+              No videos found for "{query}"
             </h2>
             <p className="text-gray-500 mb-4">
               Try different keywords or browse all subjects.
             </p>
             <Link
-              to="/"
+              href="/"
               className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
             >
               Back to Home
