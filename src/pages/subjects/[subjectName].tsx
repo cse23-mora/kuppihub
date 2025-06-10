@@ -82,13 +82,25 @@ const TelegramIcon = () => (
 
 
 
-export default function SubjectPage({ videos, currentSubject }: InferGetStaticPropsType<typeof getStaticProps>) {
-  // Data (videos, currentSubject) is now passed as props.
-  // Client-side fetching, loading states, and useParams are removed.
-  // window.scrollTo(0,0) is removed.
+export default function Subject() {
+  const { subjectName } = useParams();
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Sort videos client-side (can also be done in getStaticProps if preferred)
-  const sortedVideos = [...videos].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    fetch('https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        setVideos(data);
+        setLoading(false);
+      });
+  }, [subjectName]);
+
+  const filteredVideos = videos
+  .filter(v => v.subject.toLowerCase() === subjectName.toLowerCase())
+  .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
 
   // Preloader check might be useful if fallback:true or 'blocking' is used in getStaticPaths
   const router = useRouter();
