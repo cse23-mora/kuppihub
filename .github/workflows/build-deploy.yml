@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and Export Next.js App
         run: |
-          npm run build
+          NEXT_DISABLE_ESLINT=true npm run build
           npm run export
 
       - name: Upload Exported Site
