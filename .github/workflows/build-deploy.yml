@@ -1,4 +1,4 @@
-name: Build and Deploy React App to GitHub Pages
+name: Build and Deploy Next.js App to GitHub Pages
 
 on:
   push:
@@ -26,22 +26,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          
-      - name: Disable CI strict mode
-        run: echo "CI=false" >> $GITHUB_ENV
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Build React App
+      - name: Build and Export Next.js App
         run: |
-          echo "GENERATE_SOURCEMAP=false" >> .env
           npm run build
+          npm run export
 
-      - name: Upload Build Artifact
+      - name: Upload Exported Site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./out
 
   deploy:
     needs: build
