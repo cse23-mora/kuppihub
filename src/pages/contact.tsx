@@ -20,7 +20,7 @@ export default function Contact() {
           Contact Us
         </h2>
         <p className="text-gray-600 mb-8 sm:mb-10 text-base sm:text-lg">
-          Got a question or feedback? We'd love to hear from you.
+          Got a question or feedback? We&apos;d love to hear from you.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
@@ -61,7 +61,7 @@ export default function Contact() {
               <textarea
                 id="message"
                 name="message"
-                rows="4"
+                rows={4}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
               ></textarea>

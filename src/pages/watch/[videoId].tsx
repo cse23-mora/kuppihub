@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import Link from 'next/link';
 // Import Link if related videos are to be linked via next/link
 // import Link from 'next/link';
 
@@ -19,7 +20,7 @@ type WatchVideoPageProps = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const videoRes = await fetch('https://cse23.org/kuppihub-data/sem2.json');
+  const videoRes = await fetch('https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json');
   const videos: VideoType[] = await videoRes.json();
 
   const paths = videos

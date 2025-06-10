@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router"; // Changed from useSearchParams
 import Link from "next/link"; // Changed from react-router-dom
-import { subjects } from "@/utils/subjects"; // Updated path
 import Preloader from "@/components/Preloader"; // Updated path
 
 const TelegramIcon = () => (
@@ -15,11 +14,26 @@ const TelegramIcon = () => (
   </svg>
 );
 
+interface Video {
+  id: string;
+  title: string;
+  description: string;
+  author: string;
+  subject: string;
+  level: string;
+  publishedAt: string;
+  url?: string;
+  telegramDownload?: string;
+  telegramDownload2?: string;
+  DownloadLink?: string;
+  KuppiMaterial?: string;
+}
+
 export default function Search() {
   const router = useRouter();
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filteredVideos, setFilteredVideos] = useState([]);
+  const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -66,11 +80,6 @@ export default function Search() {
     }
   }, [router.isReady, router.query.q, videos]);
 
-  const getSubjectName = (slug) => {
-    const subject = subjects.find((s) => s.slug === slug);
-    return subject ? subject.name : slug;
-  };
-
   // Show preloader if router is not ready or if data is loading
   if (!router.isReady || loading) {
     return <Preloader />;
@@ -80,13 +89,13 @@ export default function Search() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
       <div className="max-w-6xl mx-auto space-y-6">
         <h1 className="text-3xl font-bold">
-          Search Results for: <span className="text-blue-600">"{query}"</span>
+          Search Results for: <span className="text-blue-600">&quot;{query}&quot;</span>
         </h1>
 
         {query && filteredVideos.length === 0 ? ( // Only show "No videos found" if there was a query
           <div className="bg-white p-6 rounded-lg shadow text-center">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              No videos found for "{query}"
+              No videos found for &quot;{query}&quot;
             </h2>
             <p className="text-gray-500 mb-4">
               Try different keywords or browse all subjects.

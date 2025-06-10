@@ -1,10 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, JSX } from 'react';
 import Link from 'next/link'; // Added for Next.js navigation
-import { Home, ArrowLeft, Code, Users, Sparkles, Zap, Cpu, Database } from 'lucide-react';
+import {ArrowLeft, Code, Users, Sparkles, Zap, Cpu, Database } from 'lucide-react';
+
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  color: string;
+}
+
+interface FloatingElement {
+  id: number;
+  x: number;
+  y: number;
+  rotation: number;
+  scale: number;
+  icon: JSX.Element;
+}
 
 const NotFound = () => {
-  const [particles, setParticles] = useState([]);
-  const [floatingElements, setFloatingElements] = useState([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [floatingElements, setFloatingElements] = useState<FloatingElement[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
@@ -55,7 +74,7 @@ const NotFound = () => {
 
   // Mouse tracking
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: { clientX: any; clientY: any; }) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -66,8 +85,6 @@ const NotFound = () => {
   // handleGoHome is removed as we'll use <Link>
 
   const glitchText = "404";
-  const glitchChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?";
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-700 via-blue-950 to-purple-700 overflow-hidden relative">
       {/* Animated Background Particles */}
@@ -176,15 +193,15 @@ const NotFound = () => {
         {/* Error Message */}
         <div className="mb-12 max-w-2xl animate-fade-in-up">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 animate-bounce">
-            Oops! You've found a bug in the matrix! 🐛
+            Oops! You&apos;ve found a bug in the matrix! 🐛
           </h2>
           <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-4">
-            Even the best <span className="text-blue-400 font-semibold">CSE23</span> developers 
-            couldn't find this page. It might be lost in the void of <span className="text-purple-400">infinite loops</span>.
+            Even the best <span className="text-blue-400 font-semibold">CSE23</span> developers
+            couldn&apos;t find this page. It might be lost in the void of <span className="text-purple-400">infinite loops</span>.
           </p>
           <div className="flex items-center justify-center gap-2 text-cyan-400 font-mono">
             <Code className="w-5 h-5 animate-spin" />
-            <span>// TODO: Fix this 404 error</span>
+            <span>TODO: Fix this 404 error</span>
           </div>
         </div>
 

@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'; // To access route params if needed, though getStaticProps provides them
-import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link'; // For internal navigation
 import { subjects as allSubjects } from '@/utils/subjects';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 // Preloader might be used if fallback: true/blocking, or for client-side transitions
 // For fallback: false and SSG, data is there at build time.
 // import Preloader from '@/components/Preloader';
@@ -48,7 +50,7 @@ export const getStaticProps: GetStaticProps<SubjectPageProps, { subjectName: str
   const subjectName = params!.subjectName; // Non-null assertion as subjectName is part of the path
 
   // Fetch all video data
-  const videoRes = await fetch('https://cse23.org/kuppihub-data/sem2.json', { cache: 'no-store' });
+  const videoRes = await fetch('https://raw.githubusercontent.com/cse23-mora/kuppihub-data/refs/heads/main/sem2.json', { cache: 'no-store' });
   const allVideos: VideoType[] = await videoRes.json();
 
   // Filter videos for the current subject
@@ -82,9 +84,9 @@ const TelegramIcon = () => (
 
 
 
-export default function Subject() {
+export default function Subject({ videos: initialVideos, currentSubject }: SubjectPageProps) {
   const { subjectName } = useParams();
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState(initialVideos);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -96,10 +98,6 @@ export default function Subject() {
         setLoading(false);
       });
   }, [subjectName]);
-
-  const filteredVideos = videos
-  .filter(v => v.subject.toLowerCase() === subjectName.toLowerCase())
-  .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
 
   // Preloader check might be useful if fallback:true or 'blocking' is used in getStaticPaths
@@ -116,17 +114,17 @@ export default function Subject() {
             {currentSubject.name} Videos {/* Use currentSubject from props */}
           </h1>
           <p className="text-gray-600 mt-2 text-lg">
-            {sortedVideos.length} videos found
+            {videos.length} videos found
           </p>
         </div>
 
-        {sortedVideos.length === 0 ? (
+        {videos.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">
             No videos available for {currentSubject.name}.
           </p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-            {sortedVideos.map(video => (
+            {videos.map(video => (
               <div
                 key={video.id}
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 flex flex-col justify-between"

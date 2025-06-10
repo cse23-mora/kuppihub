@@ -1,5 +1,4 @@
 import React from 'react'; // Removed useState, useEffect
-import Preloader from '@/components/Preloader'; // Updated import path
 import { motion } from 'framer-motion';
 
 
@@ -47,9 +46,9 @@ const About = () => {
                 Welcome to Kuppi Hub! 🎓
               </h1>
               <p className="text-blue-100 text-base sm:text-lg md:text-xl leading-relaxed">
-                When lectures feel like they're in alien language and your notes look like ancient hieroglyphics,
-                Kuppi Hub is here to save your semester! We're students helping students, because let's face it -
-                sometimes you need that "Wait, what?!" moment explained by someone who just survived the same confusion.
+                When lectures feel like they&apos;re in alien language and your notes look like ancient hieroglyphics,
+                Kuppi Hub is here to save your semester! We&apos;re students helping students, because let&apos;s face it -
+                sometimes you need that &quot;Wait, what?!&quot; moment explained by someone who just survived the same confusion.
               </p>
             </div>
           </motion.div>
@@ -138,7 +137,7 @@ const About = () => {
               <h2 className="text-2xl font-bold">Join The Kuppi Family!</h2>
             </div>
             <p className="text-blue-100 text-lg mb-6 leading-relaxed">
-              Whether you're here because you're lost in lectures or because you want to help others find their way -
+              Whether you&apos;re here because you&apos;re lost in lectures or because you want to help others find their way -
               welcome to the family! Remember: every genius started by being confused about something.
             </p>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300">
@@ -155,7 +154,7 @@ const About = () => {
   );
 };
 
-const Section = ({ children }) => (
+const Section = ({ children }: { children: React.ReactNode }) => (
   <div className="w-full">{children}</div>
 );
 

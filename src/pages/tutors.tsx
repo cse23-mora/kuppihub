@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import fs from 'fs';
 import path from 'path';
+import Image from 'next/image';
 
 // Define types
 type Tutor = {
@@ -58,7 +59,7 @@ export default function TutorsPage({ tutors }: InferGetStaticPropsType<typeof ge
               className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition duration-300"
             >
               <div className="aspect-square w-full overflow-hidden">
-                <img
+                <Image
                  
                   src={`/Tutors/${tutor.image}.jpg`}
                   alt={tutor.name}

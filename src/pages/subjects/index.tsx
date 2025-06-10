@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { subjects as allSubjectsFromUtil } from '@/utils/subjects';
 // Preloader likely not needed as data is from getStaticProps
 // import Preloader from '@/components/Preloader';
@@ -60,7 +61,7 @@ export default function SubjectsPage({ subjects }: InferGetStaticPropsType<typeo
               >
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl">
                   <div className="relative h-48 w-full">
-                    <img
+                    <Image
                       src={`/subjects/${subject.slug}.jpg`} // Assumes images are in public/subjects/
                       alt={subject.name}
                       className="h-full w-full object-cover group-hover:opacity-75 transition-opacity duration-300"
